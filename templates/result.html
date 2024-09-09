@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processed Image Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1 {
+            color: #333;
+        }
+        .result-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        .result-container img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        .ocr-output, .audio-output {
+            margin-top: 20px;
+            width: 100%;
+            text-align: left;
+        }
+        .ocr-output textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+        }
+        .audio-output audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Processed Image</h1>
+        <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Processed Image">
+        <div class="ocr-output">
+            <h2>OCR Output</h2>
+            <textarea readonly>{{ ocr_text }}</textarea>
+        </div>
+        <div class="audio-output">
+            <h2>Audio Output</h2>
+            <audio controls>
+                <source src="{{ url_for('static', filename='uploads/' + audio_filename) }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+</body>
+</html>
