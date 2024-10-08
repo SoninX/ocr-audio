@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwriting to OCR and Audio Generator - Canvas Drawing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h1 {
+            color: #333;
+        }
+        .draw-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #333;
+            display: block;
+            margin: 10px auto;
+            background: #fff;
+        }
+        .draw-container button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .draw-container button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        /* Add media queries for different screen sizes */
+        @media (max-width: 768px) {
+            .draw-container {
+                width: 80%;
+                margin: 20px auto;
+            }
+            canvas {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Handwriting to OCR and Audio Generator</h1>
+    <div class="draw-container">
+        <canvas id="drawCanvas" width="400" height="300"></canvas>
+        <button id="clearCanvas" aria-label="Clear canvas">Clear</button>
+        <button id="uploadCanvas" aria-label="Upload canvas">Upload</button>
+    </div>
+
+    <script>
+        const drawCanvas = document.getElementById('drawCanvas');
+        const ctx = drawCanvas.getContext('2d');
+        const clearCanvasButton = document.getElementById('clearCanvas');
+        const uploadCanvasButton = document.getElementById('uploadCanvas');
+
+        let drawing = false;
+        let currentColor = '#000000'; // Default color
+        ctx.strokeStyle = currentColor;
+
+        // Drawing on canvas
+        drawCanvas.addEventListener('mousedown', (e) => {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        drawCanvas.addEventListener('mousemove', (e) => {
+            if (drawing) {
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+        });
+
+        drawCanvas.addEventListener('mouseup', () => {
+            drawing = false;
+            ctx.closePath();
+        });
+
+        clearCanvasButton.addEventListener('click', () => {
+            ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+        });
+
+        uploadCanvasButton.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent form submission
+            const dataURL = drawCanvas.toDataURL('image/png');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'canvas_image';
+            hiddenInput.value = dataURL;
+
+            // Create a form to submit the data
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/upload_canvas';
+            form.appendChild(hiddenInput);
+            document.body.appendChild(form);
+            form.submit();
+        });
+    </script>
+</body>
+</html>

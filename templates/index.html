@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroScribe - Handwriting to OCR and Audio Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #212121, #333);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #ffffff;
+        }
+        h1 {
+            color: #66d9ef;
+            text-shadow: 0 0 10px #66d9ef;
+            margin-bottom: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 30px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+            width: 80%;
+            max-width: 500px;
+        }
+        .container a {
+            display: inline-block;
+            padding: 15px 25px;
+            color: #fff;
+            background: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .container a:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+        }
+        .neuron {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 80px;
+            color: #66d9ef;
+            text-shadow: 0 0 10px #66d9ef;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.1);
+            }
+        }
+        footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+            font-size: 0.9em;
+        }
+        footer p {
+            margin: 0;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="neuron">NeuroScribe</h1>
+    <div class="container">
+        <h1>Handwriting to OCR and Audio Generator</h1>
+        <p>Revolutionize your writing experience with NeuroScribe, the AI-powered handwriting recognition system.</p>
+        <a href="/upload_file">Upload an Image</a>
+        <a href="/upload_canvas">Draw on Canvas</a>
+        <p>Powered by cutting-edge OCR technology and advanced machine learning algorithms, NeuroScribe converts your handwriting into editable digital text and audio files.</p>
+    </div>
+    <footer>
+        <p>&copy; 2023 NeuroScribe. All rights reserved.</p>
+    </footer>
+</body>
+</html>
