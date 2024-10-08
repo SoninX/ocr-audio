@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .result-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .result-container img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        .result-container p {
+            margin-top: 20px;
+            color: #333;
+        }
+        .result-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .result-container a:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Upload Result</h1>
+        <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+        <p><strong>OCR Text:</strong> {{ ocr_text }}</p>
+        <a href="{{ url_for('static', filename='uploads/' + audio_filename) }}" download>Download Audio</a>
+    </div>
+</body>
+</html>

@@ -19,6 +19,8 @@
         }
         h1 {
             color: #333;
+            text-align: center;
+            margin-bottom: 20px;
         }
         .draw-container {
             background: #fff;
@@ -26,12 +28,20 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 90%;
+            max-width: 800px;
         }
         canvas {
             border: 1px solid #333;
             display: block;
             margin: 10px auto;
             background: #fff;
+        }
+        .controls {
+            margin: 10px 0;
+        }
+        .controls label, .controls input {
+            margin: 5px;
         }
         .draw-container button {
             display: inline-block;
@@ -43,6 +53,7 @@
             margin: 5px;
             border: none;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         .draw-container button:hover {
             opacity: 0.9;
@@ -51,12 +62,12 @@
         /* Add media queries for different screen sizes */
         @media (max-width: 768px) {
             .draw-container {
-                width: 80%;
+                width: 95%;
                 margin: 20px auto;
             }
             canvas {
                 width: 100%;
-                height: 200px;
+                height: 300px;
             }
         }
     </style>
@@ -64,9 +75,15 @@
 <body>
     <h1>Handwriting to OCR and Audio Generator</h1>
     <div class="draw-container">
-        <canvas id="drawCanvas" width="400" height="300"></canvas>
-        <button id="clearCanvas" aria-label="Clear canvas">Clear</button>
-        <button id="uploadCanvas" aria-label="Upload canvas">Upload</button>
+        <canvas id="drawCanvas" width="600" height="400"></canvas>
+        <div class="controls">
+            <label for="colorPicker">Color:</label>
+            <input type="color" id="colorPicker" value="#000000">
+            <label for="lineWidth">Line Width:</label>
+            <input type="range" id="lineWidth" min="1" max="10" value="2">
+        </div>
+        <button id="clearCanvas" aria-label="Clear canvas"><i class="fas fa-eraser"></i> Clear</button>
+        <button id="uploadCanvas" aria-label="Upload canvas"><i class="fas fa-upload"></i> Upload</button>
     </div>
 
     <script>
@@ -74,10 +91,21 @@
         const ctx = drawCanvas.getContext('2d');
         const clearCanvasButton = document.getElementById('clearCanvas');
         const uploadCanvasButton = document.getElementById('uploadCanvas');
+        const colorPicker = document.getElementById('colorPicker');
+        const lineWidth = document.getElementById('lineWidth');
 
         let drawing = false;
-        let currentColor = '#000000'; // Default color
-        ctx.strokeStyle = currentColor;
+        ctx.strokeStyle = colorPicker.value;
+        ctx.lineWidth = lineWidth.value;
+
+        // Update stroke style and width
+        colorPicker.addEventListener('change', (e) => {
+            ctx.strokeStyle = e.target.value;
+        });
+
+        lineWidth.addEventListener('input', (e) => {
+            ctx.lineWidth = e.target.value;
+        });
 
         // Drawing on canvas
         drawCanvas.addEventListener('mousedown', (e) => {
@@ -94,6 +122,11 @@
         });
 
         drawCanvas.addEventListener('mouseup', () => {
+            drawing = false;
+            ctx.closePath();
+        });
+
+        drawCanvas.addEventListener('mouseleave', () => {
             drawing = false;
             ctx.closePath();
         });
