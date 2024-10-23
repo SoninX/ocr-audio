@@ -10,3 +10,11 @@ opencv-python==4.5.5.64
 pyttsx3==2.90
 pytesseract==0.3.8
 gTTS==2.2.4
+
+editdistance==0.5.2
+lmdb==1.0.0
+# matplotlib==3.2.1
+# numpy==1.19.5
+# opencv-python==4.4.0.46
+path==15.0.0
+tensorflow==2.8.0
